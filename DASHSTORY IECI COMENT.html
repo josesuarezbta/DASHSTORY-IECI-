@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia del Bienestar Infantil - IECI</title>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            padding: 40px 20px; 
+            line-height: 1.8;
+        }
+        .story-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 25px; 
+            overflow: hidden; 
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3); 
+        }
+        .hero { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 80px 50px; 
+            text-align: center; 
+        }
+        .hero h1 { 
+            font-size: 3.5em; 
+            margin-bottom: 20px; 
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.3); 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .hero-subtitle { 
+            font-size: 1.8em; 
+            opacity: 0.95; 
+            font-style: italic; 
+        }
+        .story-content { 
+            padding: 60px; 
+        }
+        .chapter { 
+            margin-bottom: 80px; 
+        }
+        .chapter-header { 
+            background: linear-gradient(135deg, #FFF5F5 0%, #F0FFFF 100%); 
+            padding: 40px; 
+            border-radius: 20px; 
+            margin-bottom: 40px; 
+            border-left: 10px solid #FF6B6B; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08); 
+        }
+        .chapter-number { 
+            color: #FF6B6B; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 15px; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .chapter-title { 
+            color: #333; 
+            font-size: 2.8em; 
+            margin-bottom: 25px; 
+            font-family: 'Segoe UI', sans-serif; 
+            line-height: 1.3; 
+        }
+        .intro-text { 
+            font-size: 1.4em; 
+            color: #555; 
+            line-height: 2; 
+        }
+        .paragraph { 
+            font-size: 1.3em; 
+            color: #444; 
+            line-height: 2.1; 
+            margin-bottom: 30px; 
+            text-align: justify; 
+        }
+        .highlight-box { 
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFACD 100%); 
+            padding: 35px 40px; 
+            border-radius: 20px; 
+            margin: 40px 0; 
+            border-left: 8px solid #FFD700; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .highlight-box h3 { 
+            color: #F39C12; 
+            font-size: 1.8em; 
+            margin-bottom: 20px; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .highlight-box p { 
+            font-size: 1.25em; 
+            color: #666; 
+            line-height: 2; 
+        }
+        .big-number { 
+            font-size: 4.5em; 
+            font-weight: bold; 
+            color: #FF6B6B; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: inline-block; 
+            margin: 0 10px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); 
+        }
+        .positive-number { 
+            color: #4CAF50; 
+        }
+        .alert-box { 
+            background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); 
+            padding: 40px; 
+            border-radius: 20px; 
+            margin: 40px 0; 
+            border-left: 10px solid #E74C3C; 
+            box-shadow: 0 5px 25px rgba(231,76,60,0.2); 
+        }
+        .alert-box h3 { 
+            color: #E74C3C; 
+            font-size: 2em; 
+            margin-bottom: 20px; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .alert-box p { 
+            font-size: 1.25em; 
+            color: #C0392B; 
+            line-height: 2; 
+        }
+        .viz-wrapper { 
+            margin: 50px 0; 
+            padding: 40px; 
+            background: #FAFAFA; 
+            border-radius: 20px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+        }
+        .viz-title { 
+            font-size: 1.8em; 
+            color: #4ECDC4; 
+            margin-bottom: 30px; 
+            text-align: center; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .story-list { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin: 30px 0; 
+            border-left: 6px solid #4ECDC4; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .story-list li { 
+            font-size: 1.2em; 
+            color: #555; 
+            margin: 20px 0; 
+            line-height: 1.9; 
+            padding-left: 20px; 
+        }
+        .story-list li::marker { 
+            color: #4ECDC4; 
+            font-size: 1.5em; 
+        }
+        .data-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin: 40px 0; 
+        }
+        .data-card { 
+            background: white; 
+            padding: 35px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+            text-align: center; 
+            border-top: 5px solid #4ECDC4; 
+            transition: transform 0.3s ease; 
+        }
+        .data-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+        }
+        .data-card-number { 
+            font-size: 3.5em; 
+            font-weight: bold; 
+            color: #FF6B6B; 
+            margin-bottom: 15px; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .data-card-label { 
+            font-size: 1.2em; 
+            color: #666; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .conclusion-box { 
+            background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%); 
+            padding: 50px; 
+            border-radius: 25px; 
+            margin: 60px 0 40px 0; 
+            border-left: 10px solid #4CAF50; 
+            box-shadow: 0 10px 35px rgba(76,175,80,0.2); 
+        }
+        .conclusion-box h2 { 
+            color: #2E7D32; 
+            font-size: 2.5em; 
+            margin-bottom: 30px; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .conclusion-box p { 
+            font-size: 1.3em; 
+            color: #1B5E20; 
+            line-height: 2.2; 
+            margin-bottom: 25px; 
+        }
+        .footer { 
+            background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); 
+            color: white; 
+            padding: 50px; 
+            text-align: center; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
+        .footer p { 
+            font-size: 1.1em; 
+            opacity: 0.9; 
+        }
+        /* SISTEMA DE COMENTARIOS */
+        .comments-section {
+            margin: 60px 60px;
+            padding: 40px;
+            background: #f9f9f9;
+            border-radius: 20px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .comments-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .comment-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            font-size: 1.15em;
+            font-family: 'Georgia', serif;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            resize: vertical;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .comment-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 45px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .comment-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .comment-submit:active {
+            transform: translateY(0);
+        }
+
+        .comment-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .comments-list {
+            margin-top: 30px;
+        }
+
+        .comment-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4ECDC4;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .comment-date {
+            font-size: 0.95em;
+            color: #999;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .comment-text {
+            font-size: 1.15em;
+            color: #444;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 30px;
+            color: #667eea;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 30px;
+            color: #E74C3C;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+            color: #2E7D32;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 1.1em;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .comments-section {
+                margin: 30px 20px;
+                padding: 25px;
+            }
+            .comments-title {
+                font-size: 1.8em;
+            }
+            .comment-textarea {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2em; }
+            .hero-subtitle { font-size: 1.3em; }
+            .story-content { padding: 30px 25px; }
+            .chapter-title { font-size: 2em; }
+            .paragraph { font-size: 1.15em; }
+            .big-number { font-size: 3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <div class="hero">
+            <h1>📖 La Historia del Bienestar de Nuestros Niños y Niñas</h1>
+            <div class="hero-subtitle">Un viaje narrativo por el Inventario de Estrés Cotidiano Infantil</div>
+        </div>
+        
+        <div class="story-content">
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">📚 Capítulo 1</div>
+                    <h2 class="chapter-title">Conociendo a Nuestros Protagonistas</h2>
+                    <p class="intro-text">Todo comienza con 49 niños y niñas valientes de 5º y 6º de Primaria que nos abrieron su corazón en dos colegios de nuestra comunidad.</p>
+                </div>
+                
+                <p class="paragraph">
+                    Imaginemos una mañana cualquiera en el colegio. Entre risas en el recreo, tareas por entregar y exámenes por preparar, estos <strong class="big-number">49</strong> estudiantes nos compartieron cómo se sienten en su día a día. No es solo un número: son Marta, Lucas, Carmen, Diego... cada uno con su propia historia.
+                </p>
+                
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-card-number">49</div>
+                        <div class="data-card-label">Estudiantes participantes</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-number" style="color: #4CAF50;">86%</div>
+                        <div class="data-card-label">Están en buen estado</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-number" style="color: #FF9800;">12%</div>
+                        <div class="data-card-label">Necesitan algo de apoyo</div>
+                    </div>
+                </div>
+                
+                <p class="paragraph">
+                    La primera noticia que debemos celebrar es que <span class="big-number positive-number">86%</span> de estos chicos y chicas están en buen estado emocional. Es como decir que de cada 10 niños, casi 9 están navegando bien las aguas de la infancia. Pero, como en toda historia, hay personajes que necesitan nuestra atención especial.
+                </p>
+            </div>
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">🎭 Capítulo 2</div>
+                    <h2 class="chapter-title">Los Desafíos de la Vida Cotidiana</h2>
+                    <p class="intro-text">No todos los días son iguales, y algunos ámbitos de la vida les generan más tensión que otros.</p>
+                </div>
+                
+                <p class="paragraph">
+                    Cuando les preguntamos qué aspectos de su vida les generan más estrés, las respuestas fueron reveladoras. Como si estuviéramos abriendo un diario íntimo colectivo, descubrimos que las preocupaciones no se distribuyen por igual.
+                </p>
+                
+                <div id="grafico_barras" class="viz-wrapper">
+                    <div class="viz-title">🎯 ¿Dónde sienten más presión?</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>💡 Lo que nos dicen los números</h3>
+                    <p>
+                        El <strong>ámbito de la SALUD</strong> es donde más estudiantes experimentan estrés. Piénsalo: esos dolores de cabeza antes del examen, las noches sin dormir bien, las preocupaciones sobre su cuerpo... Un <span style="font-size: 1.5em; color: #FF6B6B; font-weight: bold;">37%</span> de los niños y niñas tienen niveles de estrés moderado-alto relacionados con su salud física y mental.
+                    </p>
+                </div>
+                
+                <p class="paragraph">
+                    Le sigue de cerca el <strong>estrés ESCOLAR</strong>. Y tiene sentido, ¿verdad? El colegio es donde pasan la mayor parte de su día: exámenes, deberes, relaciones con compañeros, expectativas de los profesores... Un <span style="font-size: 1.3em; color: #4ECDC4; font-weight: bold;">31%</span> experimenta presión significativa en este ámbito.
+                </p>
+                
+                <div class="viz-wrapper">
+                    <div class="viz-title">📊 La intensidad del estrés en cada área</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px;">
+                        <div id="gauge_salud" style="min-height: 300px;"></div>
+                        <div id="gauge_escolar" style="min-height: 300px;"></div>
+                        <div id="gauge_familiar" style="min-height: 300px;"></div>
+                    </div>
+                </div>
+                
+                <p class="paragraph">
+                    Lo más esperanzador es el ámbito FAMILIAR. Solo un <span style="font-size: 1.3em; color: #95E1D3; font-weight: bold;">20%</span> reporta estrés elevado en casa. Esto nos dice que, en general, las familias están siendo un refugio seguro para estos niños y niñas. Es su puerto en la tormenta.
+                </p>
+            </div>
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">🔍 Capítulo 3</div>
+                    <h2 class="chapter-title">Cada Historia es Única</h2>
+                    <p class="intro-text">Cuando miramos más de cerca, descubrimos que no todos viven el estrés de la misma manera.</p>
+                </div>
+                
+                <p class="paragraph">
+                    Entre nuestros 49 protagonistas hay <strong class="big-number" style="font-size: 3em;">26 niñas</strong> y <strong class="big-number" style="font-size: 3em;">23 niños</strong>. Y aquí es donde la historia se vuelve más interesante...
+                </p>
+                
+                <div id="grafico_sexo" class="viz-wrapper">
+                    <div class="viz-title">👦👧 ¿Experimentan el estrés de forma diferente?</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>🎯 Un hallazgo importante</h3>
+                    <p>
+                        Las niñas tienden a reportar niveles de estrés <em>ligeramente más altos</em> que los niños en todos los ámbitos. No es una diferencia dramática, pero sí consistente. Es como si llevaran un peso invisible un poco más pesado en sus mochilas emocionales.
+                    </p>
+                    <p style="margin-top: 20px;">
+                        Esto no significa que las niñas sean "más débiles" o que los niños "estén mejor". Más bien, puede reflejar diferencias en cómo expresan sus emociones, cómo perciben las presiones sociales, o incluso cómo responden honestamente a estas preguntas.
+                    </p>
+                </div>
+                
+                <div id="grafico_radar" class="viz-wrapper">
+                    <div class="viz-title">🕸️ El mapa emocional de niños y niñas</div>
+                </div>
+                
+                <p class="paragraph">
+                    Si pudiéramos visualizar el estrés como un mapa, veríamos que las áreas de preocupación se distribuyen de manera similar entre niños y niñas, pero con intensidades ligeramente diferentes. Es como si ambos grupos caminaran por el mismo terreno, pero con mochilas de diferente peso.
+                </p>
+            </div>
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">⚠️ Capítulo 4</div>
+                    <h2 class="chapter-title">Las Señales de Alerta</h2>
+                    <p class="intro-text">Algunos de nuestros protagonistas están pidiendo ayuda a gritos... aunque no siempre con palabras.</p>
+                </div>
+                
+                <div class="alert-box">
+                    <h3>🚨 Atención: Casos que requieren acción inmediata</h3>
+                    <p>
+                        Del total de estudiantes, hemos identificado <strong style="font-size: 1.8em;">7 niños y niñas</strong> que están experimentando niveles de estrés que consideramos "graves" en al menos un área de su vida.
+                    </p>
+                    <p style="margin-top: 20px;">
+                        Para ponerlo en perspectiva: es como si en cada clase de 25 estudiantes, hubiera entre 3 y 4 que están pasándola realmente mal y necesitan intervención profesional urgente.
+                    </p>
+                </div>
+                
+                <div id="tabla_casos_criticos" class="viz-wrapper">
+                    <div class="viz-title">📋 Los casos que más nos preocupan</div>
+                </div>
+                
+                <div class="story-list">
+                    <h3 style="color: #4ECDC4; margin-bottom: 25px; font-size: 1.6em;">💭 ¿Qué significa "estrés grave"?</h3>
+                    <ul>
+                        <li>Son estudiantes que probablemente tienen <strong>dificultades para dormir</strong> de forma regular</li>
+                        <li>Pueden estar experimentando <strong>dolores de cabeza o estómago frecuentes</strong> sin causa médica aparente</li>
+                        <li>Es posible que sus <strong>calificaciones hayan bajado</strong> o que se hayan aislado socialmente</li>
+                        <li>Podrían estar mostrando <strong>cambios en su comportamiento</strong>: más irritables, tristes o ansiosos</li>
+                        <li>En casa o en clase, quizás están más <strong>callados o, por el contrario, más reactivos</strong> que antes</li>
+                    </ul>
+                </div>
+                
+                <p class="paragraph">
+                    Estos no son solo números en una tabla. Son historias de niños y niñas que están luchando, que necesitan que alguien note su dolor y les tienda la mano. Cada uno de estos casos merece atención individualizada, comprensión y apoyo profesional.
+                </p>
+            </div>
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">🔗 Capítulo 5</div>
+                    <h2 class="chapter-title">Las Conexiones Ocultas</h2>
+                    <p class="intro-text">El estrés no vive aislado. Como dominós que caen uno tras otro, un problema en un área de la vida afecta a las demás.</p>
+                </div>
+                
+                <p class="paragraph">
+                    Uno de los descubrimientos más importantes de nuestra historia es que el estrés es como una red: todo está conectado. Cuando un niño o niña tiene problemas en un área, es muy probable que también los tenga en otras.
+                </p>
+                
+                <div id="grafico_correlaciones" class="viz-wrapper">
+                    <div class="viz-title">🔗 Cómo se relacionan las diferentes áreas de estrés</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>🧩 El efecto dominó del estrés</h3>
+                    <p>
+                        Imagina a un estudiante que no duerme bien (estrés de salud). Al día siguiente llega cansado a clase, no puede concentrarse en los exámenes (estrés escolar), y cuando llega a casa está irritable con su familia (estrés familiar). ¿Ves cómo una cosa lleva a la otra?
+                    </p>
+                    <p style="margin-top: 20px;">
+                        Por eso, cuando intervenimos para ayudar a un estudiante, no podemos mirar solo una parte de su vida. Necesitamos verlo como un todo: su salud, su experiencia escolar, y su ambiente familiar están entrelazados como los hilos de una telaraña.
+                    </p>
+                </div>
+                
+                <div id="tabla_perfiles" class="viz-wrapper">
+                    <div class="viz-title">👥 Los diferentes perfiles de estudiantes</div>
+                </div>
+                
+                <p class="paragraph">
+                    Al analizar los patrones, encontramos tres grandes grupos: los que están <strong>bien en todo</strong> (nuestros resilientes), los que tienen <strong>desafíos moderados</strong> (necesitan apoyo preventivo), y los que están en <strong>situación crítica</strong> (requieren intervención urgente). Cada grupo necesita un tipo diferente de acompañamiento.
+                </p>
+            </div>
+            
+            <div class="chapter">
+                <div class="chapter-header">
+                    <div class="chapter-number">📊 Capítulo 6</div>
+                    <h2 class="chapter-title">Los Números Detrás de las Historias</h2>
+                    <p class="intro-text">Para quienes quieren profundizar, aquí están los datos concretos que respaldan nuestra narrativa.</p>
+                </div>
+                
+                <div id="tabla_estadisticas" class="viz-wrapper">
+                    <div class="viz-title">📈 Estadísticas completas del estudio</div>
+                </div>
+                
+                <div class="story-list">
+                    <h3 style="color: #4ECDC4; margin-bottom: 25px; font-size: 1.6em;">🎓 ¿Qué nos dicen estos números?</h3>
+                    <ul>
+                        <li><strong>Promedio general:</strong> El nivel medio de estrés está en valores bajos-moderados, lo cual es esperanzador</li>
+                        <li><strong>Variabilidad:</strong> Hay mucha diferencia entre los estudiantes que mejor y peor están, lo que refuerza que cada caso es único</li>
+                        <li><strong>Distribución:</strong> La mayoría se agrupa en el centro (estrés leve-moderado), pero hay "colas" importantes en ambos extremos</li>
+                        <li><strong>Tendencias:</strong> El sexo parece influir moderadamente en cómo se experimenta el estrés</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="chapter">
+                <div class="conclusion-box">
+                    <h2>🌟 Epílogo: ¿Y Ahora Qué?</h2>
+                    
+                    <p>
+                        <strong>La buena noticia:</strong> La mayoría de nuestros 49 protagonistas están bien. Tienen los recursos, el apoyo y la resiliencia necesaria para navegar su infancia de forma saludable.
+                    </p>
+                    
+                    <p>
+                        <strong>La llamada a la acción:</strong> Pero hay un 14% de estudiantes que están gritando ayuda silenciosamente. Siete de ellos están en situación crítica. No podemos ignorar estas señales.
+                    </p>
+                    
+                    <div style="background: white; padding: 30px; border-radius: 15px; margin: 30px 0; border-left: 6px solid #2E7D32;">
+                        <h3 style="color: #2E7D32; margin-bottom: 20px; font-size: 1.8em;">🎯 Tres acciones inmediatas</h3>
+                        <ol style="font-size: 1.2em; line-height: 2; color: #555;">
+                            <li style="margin: 15px 0;"><strong>Intervención individualizada:</strong> Los 7 casos críticos necesitan evaluación psicológica y plan de apoyo personalizado <em>ahora</em>.</li>
+                            <li style="margin: 15px 0;"><strong>Prevención grupal:</strong> Implementar talleres de gestión del estrés para todos los estudiantes, especialmente en el ámbito de salud.</li>
+                            <li style="margin: 15px 0;"><strong>Fortalecimiento familiar:</strong> Aprovechar que las familias son un factor protector y empoderarlas con herramientas para apoyar mejor a sus hijos/as.</li>
+                        </ol>
+                    </div>
+                    
+                    <p>
+                        Esta no es solo una historia de datos y porcentajes. Es la historia de María, que se despierta con ansiedad antes de cada examen. De Carlos, que somatiza su estrés con dolores de estómago. De Lucía, que está aprendiendo a gestionar sus emociones. Y de los 42 estudiantes que, con el apoyo adecuado, están floreciendo.
+                    </p>
+                    
+                    <p style="font-size: 1.5em; font-weight: bold; text-align: center; margin-top: 40px; color: #1B5E20;">
+                        💚 Cada niño y niña merece crecer sin el peso invisible del estrés crónico. Ahora que conocemos su historia, está en nuestras manos escribir un mejor capítulo para ellos.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="comments-section">
+            <div class="comments-title">💬 Comentarios</div>
+            
+            <div class="comment-form">
+                <div class="success-message" id="successMessage">
+                    ✅ Comentario guardado correctamente
+                </div>
+                <textarea 
+                    id="commentTextarea" 
+                    class="comment-textarea" 
+                    placeholder="Escribe tu comentario aquí..."
+                ></textarea>
+                <button onclick="submitComment()" class="comment-submit" id="submitButton">
+                    Enviar Comentario
+                </button>
+            </div>
+
+            <div class="comments-list" id="commentsList">
+                <div class="loading-message">Cargando comentarios...</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📚 Dashboard Narrativo IECI - Inventario de Estrés Cotidiano Infantil</p>
+            <p style="margin-top: 15px; font-size: 0.95em;">Un análisis comprensivo del bienestar infantil en nuestra comunidad educativa</p>
+        </div>
+    </div>
+    
+    <script>
+        // DATOS (copiados del dashboard original)
+        const DATOS = {
+            estudiantes_total: 49,
+            ninas: 26,
+            ninos: 23,
+            
+            categorias: ['SALUD', 'ESCOLAR', 'FAMILIAR'],
+            casos_graves: [18, 15, 10],
+            porcentaje_graves: [37, 31, 20],
+            
+            gauge_salud_valor: 37,
+            gauge_escolar_valor: 31,
+            gauge_familiar_valor: 20,
+            
+            estres_medio_ninas: {
+                salud: 13.5,
+                escolar: 8.2,
+                familiar: 7.1
+            },
+            estres_medio_ninos: {
+                salud: 11.8,
+                escolar: 7.5,
+                familiar: 6.3
+            },
+            
+            casos_criticos: [
+                {id: 3, sexo: 'M', salud: 25, escolar: 15, familiar: 8},
+                {id: 7, sexo: 'F', salud: 23, escolar: 13, familiar: 12},
+                {id: 12, sexo: 'F', salud: 22, escolar: 14, familiar: 9},
+                {id: 19, sexo: 'M', salud: 21, escolar: 12, familiar: 11},
+                {id: 24, sexo: 'F', salud: 24, escolar: 16, familiar: 10},
+                {id: 31, sexo: 'F', salud: 20, escolar: 14, familiar: 13},
+                {id: 42, sexo: 'M', salud: 23, escolar: 15, familiar: 9}
+            ],
+            
+            perfiles: {
+                resiliente: {n: 27, pct: 55, desc: 'Bienestar en todas las áreas'},
+                moderado: {n: 15, pct: 31, desc: 'Estrés moderado en 1-2 áreas'},
+                critico: {n: 7, pct: 14, desc: 'Estrés grave en múltiples áreas'}
+            },
+            
+            estadisticas: [
+                {variable: 'SALUD', media: 12.7, desv: 5.8, min: 3, max: 25},
+                {variable: 'ESCOLAR', media: 7.9, desv: 3.4, min: 1, max: 16},
+                {variable: 'FAMILIAR', media: 6.7, desv: 2.9, min: 2, max: 13},
+                {variable: 'TOTAL', media: 27.3, desv: 10.2, min: 8, max: 51}
+            ]
+        };
+        
+        // FUNCIÓN: Crear gráfico de barras
+        function crearBarras() {
+            const data = [{
+                x: DATOS.categorias,
+                y: DATOS.casos_graves,
+                type: 'bar',
+                marker: {
+                    color: ['#FF6B6B', '#4ECDC4', '#95E1D3'],
+                    line: { color: '#fff', width: 2 }
+                },
+                text: DATOS.casos_graves.map((v, i) => `${v} casos (${DATOS.porcentaje_graves[i]}%)`),
+                textposition: 'outside',
+                textfont: { size: 16, family: 'Segoe UI', weight: 'bold' }
+            }];
+            
+            const layout = {
+                font: { family: 'Segoe UI', size: 14 },
+                yaxis: { 
+                    title: 'Número de estudiantes con estrés moderado-alto',
+                    titlefont: { size: 15, family: 'Segoe UI' }
+                },
+                xaxis: { 
+                    title: 'Ámbitos de vida',
+                    titlefont: { size: 15, family: 'Segoe UI' }
+                },
+                margin: { t: 40, b: 80, l: 80, r: 40 },
+                plot_bgcolor: '#FAFAFA',
+                paper_bgcolor: '#FAFAFA'
+            };
+            
+            Plotly.newPlot('grafico_barras', data, layout, {responsive: true});
+        }
+        
+        // FUNCIÓN: Crear gauge
+        function crearGauge(id, valor, titulo, color) {
+            const data = [{
+                type: "indicator",
+                mode: "gauge+number",
+                value: valor,
+                title: { 
+                    text: titulo,
+                    font: { size: 18, family: 'Segoe UI', weight: 'bold' }
+                },
+                number: { 
+                    suffix: "%",
+                    font: { size: 42, family: 'Segoe UI', weight: 'bold' }
+                },
+                gauge: {
+                    axis: { range: [null, 100], tickwidth: 2 },
+                    bar: { color: color, thickness: 0.8 },
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: color,
+                    steps: [
+                        { range: [0, 25], color: "#E8F5E9" },
+                        { range: [25, 50], color: "#FFF9C4" },
+                        { range: [50, 100], color: "#FFEBEE" }
+                    ],
+                    threshold: {
+                        line: { color: "red", width: 4 },
+                        thickness: 0.75,
+                        value: valor
+                    }
+                }
+            }];
+            
+            const layout = {
+                margin: { t: 60, b: 20, l: 30, r: 30 },
+                font: { family: 'Segoe UI' },
+                paper_bgcolor: '#FAFAFA'
+            };
+            
+            Plotly.newPlot(id, data, layout, {responsive: true});
+        }
+        
+        // FUNCIÓN: Comparación por sexo
+        function crearComparacionSexo() {
+            const data = [{
+                x: DATOS.categorias,
+                y: [DATOS.estres_medio_ninas.salud, DATOS.estres_medio_ninas.escolar, DATOS.estres_medio_ninas.familiar],
+                name: 'Niñas',
+                type: 'bar',
+                marker: { color: '#FF6B6B' }
+            }, {
+                x: DATOS.categorias,
+                y: [DATOS.estres_medio_ninos.salud, DATOS.estres_medio_ninos.escolar, DATOS.estres_medio_ninos.familiar],
+                name: 'Niños',
+                type: 'bar',
+                marker: { color: '#4ECDC4' }
+            }];
+            
+            const layout = {
+                barmode: 'group',
+                font: { family: 'Segoe UI', size: 14 },
+                yaxis: { 
+                    title: 'Puntuación promedio de estrés',
+                    titlefont: { size: 15 }
+                },
+                xaxis: { 
+                    title: 'Ámbitos de vida',
+                    titlefont: { size: 15 }
+                },
+                legend: { 
+                    x: 0.5, 
+                    xanchor: 'center', 
+                    y: 1.15, 
+                    orientation: 'h',
+                    font: { size: 15, weight: 'bold' }
+                },
+                margin: { t: 80, b: 80, l: 80, r: 40 },
+                plot_bgcolor: '#FAFAFA',
+                paper_bgcolor: '#FAFAFA'
+            };
+            
+            Plotly.newPlot('grafico_sexo', data, layout, {responsive: true});
+        }
+        
+        // FUNCIÓN: Radar de perfiles
+        function crearRadar() {
+            const data = [{
+                type: 'scatterpolar',
+                r: [DATOS.estres_medio_ninas.salud, DATOS.estres_medio_ninas.escolar, DATOS.estres_medio_ninas.familiar, DATOS.estres_medio_ninas.salud],
+                theta: ['SALUD', 'ESCOLAR', 'FAMILIAR', 'SALUD'],
+                fill: 'toself',
+                name: 'Niñas',
+                marker: { color: '#FF6B6B' },
+                line: { color: '#FF6B6B', width: 3 }
+            }, {
+                type: 'scatterpolar',
+                r: [DATOS.estres_medio_ninos.salud, DATOS.estres_medio_ninos.escolar, DATOS.estres_medio_ninos.familiar, DATOS.estres_medio_ninos.salud],
+                theta: ['SALUD', 'ESCOLAR', 'FAMILIAR', 'SALUD'],
+                fill: 'toself',
+                name: 'Niños',
+                marker: { color: '#4ECDC4' },
+                line: { color: '#4ECDC4', width: 3 }
+            }];
+            
+            const layout = {
+                polar: {
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 16]
+                    }
+                },
+                font: { family: 'Segoe UI', size: 14 },
+                legend: { 
+                    x: 0.5, 
+                    xanchor: 'center', 
+                    y: -0.15, 
+                    orientation: 'h',
+                    font: { size: 15, weight: 'bold' }
+                },
+                margin: { t: 60, b: 100, l: 60, r: 60 },
+                paper_bgcolor: '#FAFAFA'
+            };
+            
+            Plotly.newPlot('grafico_radar', data, layout, {responsive: true});
+        }
+        
+        // FUNCIÓN: Tabla de casos críticos
+        function crearTablaCasos() {
+            let html = `
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); color: white;">
+                            <th style="padding: 15px; text-align: left;">Estudiante</th>
+                            <th style="padding: 15px; text-align: center;">Sexo</th>
+                            <th style="padding: 15px; text-align: center;">Estrés SALUD</th>
+                            <th style="padding: 15px; text-align: center;">Estrés ESCOLAR</th>
+                            <th style="padding: 15px; text-align: center;">Estrés FAMILIAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            DATOS.casos_criticos.forEach(caso => {
+                html += `
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 12px;">Estudiante #${caso.id}</td>
+                        <td style="padding: 12px; text-align: center;">${caso.sexo === 'F' ? '👧' : '👦'}</td>
+                        <td style="padding: 12px; text-align: center; color: #E74C3C; font-weight: bold;">${caso.salud}</td>
+                        <td style="padding: 12px; text-align: center; color: ${caso.escolar >= 13 ? '#E74C3C' : '#F39C12'}; font-weight: bold;">${caso.escolar}</td>
+                        <td style="padding: 12px; text-align: center; color: ${caso.familiar >= 11 ? '#E74C3C' : '#F39C12'}; font-weight: bold;">${caso.familiar}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('tabla_casos_criticos').innerHTML += html;
+        }
+        
+        // FUNCIÓN: Tabla de perfiles
+        function crearTablaPerfiles() {
+            let html = `
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <th style="padding: 15px; text-align: left;">Perfil</th>
+                            <th style="padding: 15px; text-align: center;">Estudiantes</th>
+                            <th style="padding: 15px; text-align: center;">Porcentaje</th>
+                            <th style="padding: 15px; text-align: left;">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee; background: #E8F5E9;">
+                            <td style="padding: 12px; font-weight: bold;">🌟 Resiliente</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #4CAF50;">${DATOS.perfiles.resiliente.n}</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #4CAF50;">${DATOS.perfiles.resiliente.pct}%</td>
+                            <td style="padding: 12px;">${DATOS.perfiles.resiliente.desc}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee; background: #FFF9E6;">
+                            <td style="padding: 12px; font-weight: bold;">⚠️ Moderado</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #F39C12;">${DATOS.perfiles.moderado.n}</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #F39C12;">${DATOS.perfiles.moderado.pct}%</td>
+                            <td style="padding: 12px;">${DATOS.perfiles.moderado.desc}</td>
+                        </tr>
+                        <tr style="background: #FFEBEE;">
+                            <td style="padding: 12px; font-weight: bold;">🚨 Crítico</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #E74C3C;">${DATOS.perfiles.critico.n}</td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: #E74C3C;">${DATOS.perfiles.critico.pct}%</td>
+                            <td style="padding: 12px;">${DATOS.perfiles.critico.desc}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('tabla_perfiles').innerHTML += html;
+        }
+        
+        // FUNCIÓN: Correlaciones
+        function crearCorrelaciones() {
+            const data = [{
+                z: [
+                    [1.00, 0.68, 0.52],
+                    [0.68, 1.00, 0.61],
+                    [0.52, 0.61, 1.00]
+                ],
+                x: ['SALUD', 'ESCOLAR', 'FAMILIAR'],
+                y: ['SALUD', 'ESCOLAR', 'FAMILIAR'],
+                type: 'heatmap',
+                colorscale: [
+                    [0, '#E8F5E9'],
+                    [0.5, '#FFF9C4'],
+                    [1, '#FFEBEE']
+                ],
+                text: [
+                    ['Perfecta', 'Fuerte', 'Moderada'],
+                    ['Fuerte', 'Perfecta', 'Fuerte'],
+                    ['Moderada', 'Fuerte', 'Perfecta']
+                ],
+                texttemplate: "%{z:.2f}<br>%{text}",
+                textfont: { size: 13, family: 'Segoe UI' },
+                showscale: true
+            }];
+            
+            const layout = {
+                font: { family: 'Segoe UI', size: 14 },
+                margin: { t: 60, b: 80, l: 100, r: 60 },
+                xaxis: { side: 'bottom' },
+                yaxis: { autorange: 'reversed' },
+                paper_bgcolor: '#FAFAFA'
+            };
+            
+            Plotly.newPlot('grafico_correlaciones', data, layout, {responsive: true});
+        }
+        
+        // FUNCIÓN: Tabla de estadísticas
+        function crearTablaEstadisticas() {
+            let html = `
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); color: white;">
+                            <th style="padding: 15px; text-align: left;">Variable</th>
+                            <th style="padding: 15px; text-align: center;">Media</th>
+                            <th style="padding: 15px; text-align: center;">Desv. Estándar</th>
+                            <th style="padding: 15px; text-align: center;">Mínimo</th>
+                            <th style="padding: 15px; text-align: center;">Máximo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            DATOS.estadisticas.forEach(est => {
+                html += `
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 12px; font-weight: bold;">${est.variable}</td>
+                        <td style="padding: 12px; text-align: center;">${est.media}</td>
+                        <td style="padding: 12px; text-align: center;">${est.desv}</td>
+                        <td style="padding: 12px; text-align: center; color: #4CAF50;">${est.min}</td>
+                        <td style="padding: 12px; text-align: center; color: #E74C3C;">${est.max}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('tabla_estadisticas').innerHTML += html;
+        }
+        
+        // INICIALIZAR
+        window.addEventListener('load', function() {
+            crearBarras();
+            crearGauge('gauge_salud', DATOS.gauge_salud_valor, 'Estrés en SALUD', '#FF6B6B');
+            crearGauge('gauge_escolar', DATOS.gauge_escolar_valor, 'Estrés ESCOLAR', '#4ECDC4');
+            crearGauge('gauge_familiar', DATOS.gauge_familiar_valor, 'Estrés FAMILIAR', '#95E1D3');
+            crearComparacionSexo();
+            crearRadar();
+            crearTablaCasos();
+            crearTablaPerfiles();
+            crearCorrelaciones();
+            crearTablaEstadisticas();
+            
+            // Cargar comentarios
+            loadComments();
+        });
+
+        // ==========================================
+        // SISTEMA DE COMENTARIOS
+        // ==========================================
+        
+        // ⚠️ PEGA AQUÍ TU NUEVA URL DEL DEPLOYMENT (terminada en /exec)
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4xRjAAwRsO0l7-NPJivpbe1mGft8GdqvXSSQfD3f5A1m3UhhY-82nkJoGNY2s9kSS/exec';
+        
+        // Función para cargar comentarios desde Google Sheets
+        async function loadComments() {
+            const commentsList = document.getElementById('commentsList');
+            
+            // Validación básica para advertir si no se ha configurado la URL
+            if (SCRIPT_URL === 'AQUÍ_VA_TU_URL_DE_APPS_SCRIPT') {
+                console.warn('URL del script no configurada');
+                return;
+            }
+
+            try {
+                const response = await fetch(SCRIPT_URL + '?action=get');
+                const data = await response.json();
+                
+                if (data.comments && data.comments.length > 0) {
+                    commentsList.innerHTML = '';
+                    data.comments.forEach(comment => {
+                        const commentElement = createCommentElement(comment);
+                        commentsList.appendChild(commentElement);
+                    });
+                } else {
+                    commentsList.innerHTML = '<div class="no-comments">Aún no hay comentarios. ¡Sé el primero en comentar!</div>';
+                }
+            } catch (error) {
+                console.error('Error al cargar comentarios:', error);
+                commentsList.innerHTML = '<div class="error-message">Error al cargar comentarios. Por favor, intenta de nuevo más tarde.</div>';
+            }
+        }
+
+        // Función para crear elemento HTML de comentario
+        function createCommentElement(comment) {
+            const div = document.createElement('div');
+            div.className = 'comment-item';
+            
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'comment-date';
+            dateDiv.textContent = comment.date;
+            
+            const textDiv = document.createElement('div');
+            textDiv.className = 'comment-text';
+            textDiv.textContent = comment.text;
+            
+            div.appendChild(dateDiv);
+            div.appendChild(textDiv);
+            
+            return div;
+        }
+
+        // Función para enviar comentario
+        async function submitComment() {
+            const textarea = document.getElementById('commentTextarea');
+            const submitButton = document.getElementById('submitButton');
+            const successMessage = document.getElementById('successMessage');
+            const commentText = textarea.value.trim();
+            
+            if (SCRIPT_URL === 'AQUÍ_VA_TU_URL_DE_APPS_SCRIPT') {
+                alert('Falta configurar la URL del script en el código HTML');
+                return;
+            }
+
+            if (!commentText) {
+                alert('Por favor, escribe un comentario antes de enviar.');
+                return;
+            }
+            
+            // Deshabilitar botón mientras se envía
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+            
+            try {
+                // Usamos text/plain para evitar el bloqueo CORS de Google Apps Script
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8', 
+                    },
+                    body: JSON.stringify({
+                        action: 'add',
+                        comment: commentText
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Mostrar mensaje de éxito
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                    
+                    // Limpiar textarea
+                    textarea.value = '';
+                    
+                    // Recargar comentarios
+                    loadComments();
+                } else {
+                    alert('Error al guardar el comentario. Por favor, intenta de nuevo.');
+                }
+            } catch (error) {
+                console.error('Error al enviar comentario:', error);
+                alert('Error al enviar el comentario. Por favor, verifica tu conexión e intenta de nuevo.');
+            } finally {
+                // Rehabilitar botón
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar Comentario';
+            }
+        }
+
+        // Permitir enviar con Ctrl+Enter o Cmd+Enter
+        document.getElementById('commentTextarea').addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                submitComment();
+            }
+        });
+    </script>
+</body>
+</html>
